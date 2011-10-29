@@ -6,7 +6,7 @@ gem 'rails', '~> 3.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2', '~> 0.2.11'
-
+gem 'jquery-rails'
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -34,4 +34,6 @@ group :test do
   gem 'cucumber-rails'
   gem 'rspec-rails'
   gem 'webrat'
+  gem 'database_cleaner'
+  gem 'jasmine'
 end
