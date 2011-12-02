@@ -1,0 +1,255 @@
+to be updated...
+rails generate cucumber:install after installing cucumber-rails
+Feature: manage articles
+In order ...
+As a...
+I want ...
+
+Scenario: Articles list
+Given ...
+When ...
+Then ...
+
+when want to make changes to a gem, do bundle package, and then make changes in the appropriate directory in vendor/gems!
+
+def foo(&my_block)
+  my_block.call
+end
+foo {puts "hi"} # correct
+foo({puts "hi"} # wrong
+foo(lambda {puts "hi"}) # also wrong
+
+def foo
+  yield
+end
+foo {puts "hi"} # also correct
+
+
+
+261 testing javascript with jasmine
+testing cc vaidation with jasmine
+referst to use acceptance tests from 257 request specs and capybara
+jasmine for unit tests of javascript
+
+question: how do u run jasmine tests?
+'rake jasmine' but it does not run on this now, why?
+describe("CreditCard", function() {
+  it("cleans the number by removing spaces and dashes", function() {
+    expect(CreditCard.cleanNumber("123 4-5")).toEqual("12345");
+  });
+});
+and the javascript file has:
+var CreditCard = {
+  cleanNumber: function(number) {
+    return number.replace(/[- ]/g, "");
+  }
+}
+recommends integrating this all with capybara and selenium
+also try rake jasmin:ci, probably it is old now and wont run
+
+
+Javascript:
+An object constructor is merely a regular JavaScript function, so it's just as robust (ie: define parameters, call other functions etc). The difference between the two is that a constructor function is called via the new operator (which you'll see below). By basing our object definition on the function syntax, we get its robustness as well.
+
+function cat(name) {
+  this.name = name;
+  this.talk = function() {
+    alert( this.name + " say meeow!" )
+  }
+} 
+cat1 = new cat("felix")
+cat1.talk() //alerts "felix says meeow!"
+cat2 = new cat("ginger")
+cat2.talk() //alerts "ginger says meeow!"
+
+We saw above how to add a method to our constructor function by merely declaring it inside the function. Another approach is through prototyping, which is also more popular due to its elegance. Prototype is a type of inheritance in JavaScript. We use it when we would like an object to inherit a method after it has been defined. Think of prototyping mentally as "attaching" a method to an object after it's been defined, in which all object instances then instantly share.
+
+Lets extend our original cat() object above with an additional method to change the cat's name, using prototype:
+
+cat.prototype.changeName = function(name) {
+  this.name = name;
+}
+// example ie5 does not have Array.shift, so let us add to it!
+if(!Array.prototype.shift) { // if this method does not exist..
+  Array.prototype.shift = function(){
+    firstElement = this[0];
+    this.reverse();
+    this.length = Math.max(this.length-1,0);
+    this.reverse();
+    return firstElement;
+  }
+}
+if(!Array.prototype.unshift) { // if this method does not exist..
+  Array.prototype.unshift = function(){
+    this.reverse();
+      for(var i=arguments.length-1;i>=0;i--){
+        this[this.length]=arguments[i]
+      }
+    this.reverse();
+    return this.length
+  }
+}
+
+
+
+Inheritance in js:
+The following is an example of inheritance through functions.
+function superClass() {
+  this.supertest = superTest; //attach method superTest
+}
+function subClass() {
+  this.inheritFrom = superClass;
+  this.inheritFrom();
+  this.subtest = subTest; //attach method subTest
+}
+
+function superTest() {
+  return "superTest";
+}
+  
+function subTest() {
+  return "subTest";
+}
+
+ var newClass = new subClass();
+  alert(newClass.subtest()); // yields "subTest"
+  alert(newClass.supertest()); // yields "superTest"
+
+
+rvm create a gemset at commandline and switch to it:
+rvm ruby1.9.2-p136@gemsetname --create
+this will show gemsetname as the name of the gemset
+next, install the version of rails u want for the app, example:
+gem install rails --pre --no-rdoc --no-ri
+next, create rails app, cd into it
+next, create its .rvmrc file to have rvm use ruby1.9.2-p136@gemsetname
+
+
+Rails server setup:
+from passenger.mov in the rails server setup playlist:
+1 gem install passenger
+2 sudo passenger-install-apache2-module
+it takes u step by step before installation, then u deploy
+setup config file by copying the foll to apache config:
+<p>"
+  LoadModule /usr/local/apache2/modules/mod_passenger.so
+  RailsSpawnServer passenger_module path/to/passenger-0.9.6/bin/passenger-spawn-server
+  RailsRuby path/to/uss/bin/ruby
+"</p>
+Then setup ur virtualhost:
+
+<VirtualHost *:80>
+  ServerName www.yourhost.com
+  DocumentRoot path/to/rails/app/public
+</VirtualHost>
+
+restart apache by: sudo apachectl graceful
+
+then type localhost and it should work! (same as yourhost.com)
+
+From passenger_nginx in the rails server setup playlist
+
+4 steps:
+1 gem install passenger
+
+2 sudo passenger-install-nginx-module # with sudo? says so
+it detects ruby and rails, and inserts it into its config, probably /opt/nginx/conf/nginx.conf
+it already has:
+http {
+  passenger_root path/to/gems/passenger-2.2.0;
+  passenger_ruby path/to/bin/ruby
+  ...
+}
+
+now paste in the server block:
+server {
+  listen 80;
+  server_name yourhost.com;
+  #or:
+  #server_name peepcode.local; // as there is a dns entry fr it in /etc/hosts
+
+  root path/to/railsapp/public;
+  passenger_enabled on;
+  rails_env development;
+
+}
+3config
+sudo /opt/nginx/sbin/nginx # this starts it
+4 launch
+hit peepcode.local in browser and there u have it!
+Sproutcore:
+sc-init appname --template is the generator to create an app
+main.js in the app/resources folder is teh entry point for the app
+
+passenger_rack.mov
+mkdir rackapp
+mkdir rackapp/public rackapp/tmp
+vim rackapp/config.ru # this is a required configuration file
+u can add ruby classes here like class HelloWorld and so on
+thsi class needs to have:
+class HelloWorld
+  def call(env)
+    [200, {"Content-Type" => "text/html"}, "hello <strong>world</strong>"]
+    # the last is the response text, 200 is status, middle arg is headers
+  end
+end
+run HelloWorld.new # and u have a rack app!
+next step is to deploy this app on passenger
+with apache
+
+<VirtualHost *:80>
+  DocumentRoot: # look above
+  ServerName: # look above 
+</VirtualHost>
+
+
+
+
+
+
+
+
+
+
+
+Too important to pass:
+rvmsudo passenger-install-nginx-module
+rvm has a sudo!
+
+
+Automated deployment:
+a simple automated deployment example with unicorn:
+http://codebeef.com/automated-deploy-with-unicorn-and-git/
+**********************************************************
+*  APP_ROOT=/path/to/app
+*  UNICORN_PID=$APP_ROOT/tmp/pids/unicorn.pid
+*
+*  # Deploy the updated code
+*  mkdir -p $APP_ROOT
+*
+*  # Only want to export from the production branch
+*  git archive production | tar -x -C $APP_ROOT # this creates a tar archive and puts it at app_root
+
+*  if [ -f $UNICORN_PID ]
+*    then
+*      kill -USR2 `cat $UNICORN_PID`
+*    else
+*      unicorn -c $APP_ROOT/unicorn.rb -D -E production
+*  fi
+*********************************************************
+
+
+Sproutcore:
+
+Controller layer maintains the application state (is this window open or closed etc)
+
+model layer has models, data store, and data source, and server. the data store is an in-memory database, and the data source is the backend database out of which the data store is derived. The server persists the data to disk.
+
+First, create an object that inherits from SC.Statechart
+and save to a js file,
+next, we need to create a html page
+
+to handle events, we need to create a view object
+
+
+

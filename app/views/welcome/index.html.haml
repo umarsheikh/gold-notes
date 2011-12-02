@@ -1,0 +1,94 @@
+%div.outer
+  %p.ruby.metaprogramming.class_eval.from-screencast-class-eval-intance-eval
+    %pre
+      $
+      class Foo
+      end
+      def add_accessor_to_foo(accessor_name)
+      Foo.class_eval %Q{attr_accessor :\#{accessor_name}}
+      end
+      f = Foo.new
+      add_accessor_to_foo :bar
+      f.bar = 'this is bar'
+    $
+  %p.ruby.metaprogramming.class_eval.from-screencast-class-eval-intance-eval
+    we can even add the attr_accessor to class Class, and then all classess Cl can do: Cl.add_accessor_to_foo like so:
+    %pre
+      $
+      class Class
+      def add_accessor_to_foo(accessor_name)
+      self.class_eval %Q{attr_accessor :\#{accessor_name}}
+      end
+      end
+      class Foo
+      end
+      Foo.add_accessor_to_foo(:bar)
+    $
+  %p.ruby.metaprogramming.class_eval.from-screencast-class-eval-intance-eval
+    Now, how does attr_accessor work, here is an example to show how:
+    %pre
+      $
+      class Class
+      def my_accessor(accessor_name)
+      self.class_eval %Q{
+      def \#{accessor_name}
+      @\#{accessor_name}
+      end
+      def \#{accessor_name}=(new_value)
+      @\#{accessor_name} = new_value
+      end
+      }
+      end
+      end
+      class Foo
+      my_accessor :height # will define getter and setter for height
+      Foo.my_accessor :length # also works!
+      self.my_accessor :height # also works!
+      my_accessor :height # will define getter and setter for height
+      \# also has_many in rails etc is also like this!
+      end
+    $
+  %p.ruby.metaprogramming.instance_eval.from-screencast-class-eval-intance-eval
+    Like class_eval, but within the context of an object
+    for instance, here is how to get access to a instance variable without having an attr_reader for it:
+    %pre
+      $
+      class Foo
+      def initialize(v)
+      @v = v
+      end
+      end
+      f = Foo.new(10)
+      f.instance_eval {
+      puts @v # will have access to @v!
+      }
+    $
+  %p.sproutcore.from-8-screencasts-on-faces
+    gem install sproutcore, then:
+    %pre
+      $
+      sc-init todos --template # to generate the application
+      sc-init faces # what we will do with this
+      sc-server to start the server
+
+    $
+    %pre
+      $
+      the main_page.js file is the file that defines how the page should look like
+      core.js is the one where the namespace for ur application, example "Faces" is defined
+      store is also defined in the core.js file, which is the interface to ur data
+      by default, store loads data from fixtures
+      main.js is the entry point for the program, u can have initialization etc here
+      the sc-gen is a generator that can be used to generate models/views/controllers
+      sc-gen model Faces.Person
+      Add a few fixtures, then when u reload the application, u can enter into console the following code:
+      %code
+        var people = Faces.store.find(Faces.Person);
+        people;
+        people.getEach("name")
+      2 screencasts done, moving on to the third
+      now, define the view in main_page.js
+      there is a page, and there is a pane
+
+      the mai.js file 
+    $
