@@ -1,0 +1,6 @@
+If you deleted your ubuntu panel and want to restore it, execute the following 4 commands:
+   gconftool-2 --shutdown
+   gconftool --recursive-unset /apps/panel
+   rm -rf ~/.gconf/apps/panel
+   pkill gnome-panel
+

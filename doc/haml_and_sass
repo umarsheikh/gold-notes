@@ -1,0 +1,66 @@
+27 minutes done!
+
+from the video in the Haml and sass folder, long video, only the latter part on sass is good, the earlier is already known
+
+haml -f html5 input.haml output.html
+
+sass has:
+  variables, mixins, nesting, selector inheritance
+  
+  VARIABLES
+  $blue: #3bbfce
+  h1
+    color: $blue
+  p
+    color: darken($blue, 10%)
+    
+  NESTING
+  $fontsize: 10px
+  .column
+    .speaker
+      font:
+        weight: bold
+        size: $fontsize + 10px
+      .talk
+        color: lighten($blue, 30%)
+        font: $fontsize
+        
+        the font thing compiles to: font-weight: bold, font-size: $fontsize+10px etc, so u get rid of the repetititon of font keyword from font-size font-weight font-family etc
+        
+        so there are two types of nesting:
+        the latter type is like:  font:
+                                    size: 10px
+                                    
+  MIXINS
+  @mixin border-radius($amount: 2px)
+    -moz-border-radius: $amount
+    -webkit-border-radius: $amount
+    border-radius: $amount
+    
+  h1
+    @include border-radius(5px)
+  .column
+    @include border-radius
+    
+  So, a mixin is like a function
+  
+  
+  SELECTOR INHERITANCE
+  h1
+    border: 1px solid #4ad877
+  .column
+    @extend h1
+    border-width: 2px
+    
+  sass is precompiled before u deploy
+  
+  enter on the command line: sass --watch stylesheets/sass:stylesheets/compiled
+  
+  sassy css is css inspired by sass, it is a new syntax (scss)
+  rename sass => scss
+  needs semicolons
+  add squiggly brackets
+  
+  sass --watch stylesheets/scss:stylesheets/compiled
+  
+  

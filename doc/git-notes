@@ -1,0 +1,26 @@
+for capistrano deployment, i want to do the following:
+
+checkout code on a build server
+run tests on it automatedly
+if tests pass, then deploy the checked out code on staging
+so we dont want to checkout code on build, test it, and then deploy from git, as someone else might have committed something ontop, we want to deploy what is the current head in the checked out code.
+
+we can do that if we have cloned the code on the git repo, which means the code is from git repo. so we can do something like
+
+cat .git/refs/remotes/origin/master 
+2bc78c4332bd2b76bd7f6be4c9ac732d2e19c9ba
+or
+git --git-dir=./.git rev-parse --verify HEAD
+2bc78c4332bd2b76bd7f6be4c9ac732d2e19c9ba
+or
+git --git-dir=./.git rev-parse origin/master
+2bc78c4332bd2b76bd7f6be4c9ac732d2e19c9ba
+or
+git log --pretty=format:'%H' -n 1
+
+to get the commit id, and then do cap deploy using this id
+
+but if we had copied the code by some sort of export on the build server, we wont have the .git repo, in this case, how can we deploy the current checked out code. it must be having an id, what is the best way to store this id and use it in an ant script that would then do a cap deploy with this id?
+
+
+
