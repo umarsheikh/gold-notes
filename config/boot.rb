@@ -1,3 +1,5 @@
+$fileorder = []
+$fileorder.push __FILE__
 require 'rubygems'
 
 # Set up gems listed in the Gemfile.
