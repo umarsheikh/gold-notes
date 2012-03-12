@@ -1,5 +1,9 @@
 $fileorder.push __FILE__
 GoldNotes::Application.routes.draw do
+  get "example/cucumber_xml"
+
+  get "example/taggings"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
