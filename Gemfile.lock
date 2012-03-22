@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.11.2)
+      ZenTest (~> 4.3)
+    ZenTest (4.7.0)
     actionmailer (3.2.0)
       actionpack (= 3.2.0)
       mail (~> 2.4.0)
@@ -109,6 +112,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RubyInline
   coffee-rails (~> 3.2.1)
   haml-rails
   jquery-rails
