@@ -1,5 +1,7 @@
 $fileorder.push __FILE__
 GoldNotes::Application.routes.draw do
+  resources :users
+
   get "example/cucumber_xml"
 
   get "example/taggings"
