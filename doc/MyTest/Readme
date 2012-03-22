@@ -1,0 +1,17 @@
+Create a ruby extension in c
+
+http://www.rubyinside.com/how-to-create-a-ruby-extension-in-c-in-under-5-minutes-100.html
+
+You create two files, extconf.rb, and MyTest.c, then you do:
+- ruby extconf.rb
+- make
+
+This creates more files like mytest.so and MyTest.o
+
+You can checkout now with the following simple runner:
+
+require './mytest' # from the directory with the files
+include MyTest
+puts test1 # this line will then print 10
+
+
