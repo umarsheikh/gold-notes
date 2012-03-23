@@ -74,7 +74,21 @@ class Example
         run_thread(self, name);
     }'      
 
-
+    builder.c '
+      static void threaded_func(VALUE x) {
+        printf("i am a threaded function");
+//        return 0;
+      }
+    '
+    builder.c '
+      static void threads2() {
+        pthread_t pth;
+        int i = 9;
+        pthread_create(&pth, NULL, (void *)threaded_func, (int *) i);
+        pthread_join(pth, NULL);
+//        return 0;
+      }
+    '
     builder.c '
     static void threads(VALUE name){
         pthread_t pth;
@@ -82,10 +96,11 @@ class Example
         pthread_create(&pth, NULL, (void *)run_thread, (VALUE *)name );
 
         pthread_join(pth, NULL);
+        return name;
     }'              
   end
-
-end
 # Example.new.run_thread 'Adam' now works
 # Example.new.simple 'Adam apple' now works
 # Example.new.threads('Adam') segfaults!
+end
+
