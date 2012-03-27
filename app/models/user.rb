@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
     builder.include "<pthread.h>"
     builder.include '<iostream>'
     builder.include '<stdio.h>'
+    builder.include '<stdlib.h>'
+    builder.include '<string.h>'
+
+
     builder.add_compile_flags '-x c++', '-lstdc++'
     builder.c "
       long factorial(int max) {
@@ -21,12 +25,6 @@ class User < ActiveRecord::Base
   end
 
 
-  def self.example_pthread
-    list_of_names = [['hello','mellow'],['harry','larry'],['umar','sheikh']]
-    u = User.new
-    thread = u.create_thread
-    thread.execute(['hello', 'mellow'])
-  end
   def self.example_hello
     u = User.new
     u.hello 8
@@ -53,8 +51,6 @@ class User < ActiveRecord::Base
     puts "user count #{User.count}"
   end
 end
-
-
 
 class Example
 
@@ -97,10 +93,80 @@ class Example
 
         pthread_join(pth, NULL);
         return name;
-    }'              
+    }'
+    	
+    builder.c '
+      void threaded(VALUE arg){
+          int* p = (int *)malloc(sizeof(int));
+          int i;
+          if(TYPE(arg) == T_RATIONAL) {
+            printf("got it, type is rational\n");
+          }
+          
+          printf("i get type %d and potentially value \n", TYPE(arg));
+
+        
+      }
+    '
+    builder.c '
+      int create_num_threads(VALUE data) {
+        int len, i, j, t, rows, cols, tt, length;
+        char ***wholedata;
+        char names[24][15] = {"T_NIL", "T_OBJECT", "T_CLASS",	"T_MODULE",	"T_FLOAT", "T_STRING",	
+          "T_REGEXP",	"T_ARRAY", "T_HASH", "T_STRUCT", "T_BIGNUM", "T_FIXNUM",	
+          "T_COMPLEX", "T_RATIONAL", "T_FILE", "T_TRUE", "T_FALSE", "T_DATA",
+          "T_SYMBOL", "T_ICLASS", "T_MATCH", "T_UNDEF", "T_NODE", "T_ZOMBIE"};
+        int array[24] = {T_NIL,	T_OBJECT,	T_CLASS,	T_MODULE,	T_FLOAT,	T_STRING,	
+          T_REGEXP,	T_ARRAY,	T_HASH,	T_STRUCT,	T_BIGNUM,	T_FIXNUM,	
+          T_COMPLEX,	T_RATIONAL,	T_FILE,	T_TRUE,	T_FALSE,	T_DATA,	
+          T_SYMBOL, T_ICLASS, T_MATCH, T_UNDEF, T_NODE, T_ZOMBIE};
+
+        char ** mydata;
+        int * c = (int *)malloc(sizeof(int));
+        VALUE * matrix, *matrixrow, *matrixcol;
+        char *p, *q;
+        pthread_t *pth;
+
+        for(i = 0; i < 24; i++) {
+          printf("%s = %d\t", names[i], array[i]);
+        }
+        printf("\n");
+        t = TYPE(data);
+        if(t == T_ARRAY){
+          printf("processing array type %d\n", t);
+          rows = RARRAY_LEN(data);
+          pth = (pthread_t *)malloc(rows * sizeof(pthread_t));
+          wholedata = (char ***)malloc(sizeof(char **) * rows);
+          matrix = RARRAY_PTR(data);
+          
+          for(i = 0; i < rows; i++) {
+
+            matrixrow = RARRAY_PTR(matrix[i]);
+            len = RARRAY_LEN(matrix[i]);
+            printf("type of matrix[%d] entry is %d and its len is %d\n", i, TYPE(matrix[i]), len);
+            printf("row %d has columns %d\n", i, len);
+            tt = TYPE(matrixrow);
+            wholedata[i] = (char **)malloc(sizeof(char *) * len);
+            *c = i;
+            for(j = 0; j < len; j++) {
+              length = RSTRING_LEN(matrixrow[j]);
+              printf("length %d name %s\n", length, StringValuePtr(matrixrow[j]));
+              wholedata[i][j] = (char *)malloc(sizeof(char) * (1+length));
+            }
+            pthread_create(&pth[i], NULL, (void *)threaded, c);
+          }
+          for(i = 0; i < rows; i++) {
+            pthread_join(pth[i], NULL);
+          }
+        }
+        return 0;
+      }
+    '
   end
 # Example.new.run_thread 'Adam' now works
 # Example.new.simple 'Adam apple' now works
 # Example.new.threads('Adam') segfaults!
+# Example.new.threads2() works!
+#Example.new.create_num_threads([["hello","mellow"],["harry","larry"], ["umar", "sheikh"]])
 end
 
