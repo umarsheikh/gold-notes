@@ -1,0 +1,46 @@
+1 install pry globally so it is available across all gemsets: 'rvm gemset use global; && gem install pry pry-doc'
+2 rails c uses irb in the background
+3 use: pry -r ./config/environment
+4 u can do: cd User; cd first; name; upcase etc
+5 type nesting to see list of object u have gone into
+6 ls is used for listing variables and methods
+7 ls -h
+8 ls Array -M
+
+9 Also try: cd Array; show-method index -l to see the C source code along with line numbers!
+
+10 and try: cd Array; edit-method index to open the source code file  (but u cant edit a C method!)
+
+11 u can add binding.pry in controller#index for example, then whe nu load the page, it will get stuck there, u inspect around, and then type: 'exit-all' to resume
+pry, or irb, is something like: "loop {p eval gets}"
+
+12 help; some-method -h # to see help on a method
+
+13: require a gem, and inspect methods inside it:
+  require 'hello_world'
+  ls HelloWorld -m
+  ls HelloWorld -mj # just the methods inside this object
+
+14 gem-cd rails
+
+15 u can clear the buffer like:
+  def helo(name)
+  show-input
+  !
+  # and then start over again
+
+16 def hello(name)
+     "hello #{name}
+   show-input
+   amend-line 2 "hello #{name}"
+   end
+   
+17 also checkout environments/development.rb:
+  silence_warnings do
+    require 'pry'
+    IRB = Pry  
+  end
+   to make rails c open pry console
+18 ls -i lists the instance variables
+
+
