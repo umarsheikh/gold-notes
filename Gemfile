@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.0'
 gem 'pry'
 gem 'pry-doc'
+gem 'patron'
+gem 'nokogiri'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

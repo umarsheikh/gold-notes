@@ -1,0 +1,8 @@
+.rbenv*
+.rvmrc
+*.bundle
+coverage
+rdoc
+doc
+pkg
+tmp
