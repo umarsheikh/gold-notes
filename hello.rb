@@ -1,0 +1,1 @@
+loop {puts eval gets}

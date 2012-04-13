@@ -1,0 +1,5 @@
+if u are passing a hash to a method, thne rails provides a nice way to extract them using the extract_options method like so:
+
+def method(name, *args)
+  options = args.extract_options!
+end

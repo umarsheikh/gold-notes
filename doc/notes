@@ -4,3 +4,66 @@ If you deleted your ubuntu panel and want to restore it, execute the following 4
    rm -rf ~/.gconf/apps/panel
    pkill gnome-panel
 
+Install local gem:
+gem install --local path_to_gem/filename.gem
+rake build; install; release
+rake install to build and install locally
+
+
+generate a patch with git and apply it:
+git diff --no-prefix > patchfile
+patch -p0 < patchfile
+
+show sql queries onthe console:
+type into console:
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.clear_active_connections!
+
+
+see plugin object_daddy
+
+class Wellset < ActiveRecord::Base
+
+  generator_for(:name, :start => "wellset") { |prev| prev.succ }
+  generator_for :workspace, :method => :gen_workspace
+  generator_for :orders, :method => :gen_orders
+
+  def self.gen_workspace
+    @workspace = Workspace.generate
+  end
+  def self.gen_orders
+    [Order.generate(:workspace => @workspace)]
+  end
+end
+
+for
+class Wellset < ActiveRecord::Base
+  has_many :orders_wellsets
+  has_many :orders, :through => :orders_wellsets
+  belongs_to :workspace
+  validates_presence_of :workspace
+  validates_uniqueness_of :name
+  validates_presence_of :name
+  validates_presence_of :orders
+  validate :orders_from_one_workspace
+  validate :workspace_sanity
+
+  def workspace_sanity
+    if orders.first && (orders.first.workspace == self.workspace)
+      return true
+    else
+      self.errors[:workspace_id] = "should be same as orders' workspace"
+      return false
+    end
+  end
+
+  def orders_from_one_workspace
+    if orders.collect(&:workspace_id).uniq.length >= 2
+      self.errors[:orders] ||= []
+      self.errors[:orders] << "All orders must be from one workspace"
+      return false
+    else
+      return true
+    end
+  end
+end

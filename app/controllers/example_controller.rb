@@ -4,4 +4,11 @@ class ExampleController < ApplicationController
 
   def taggings
   end
+  
+  def with_form
+    @example = Object.new
+    class << @example
+      
+    end
+  end
 end

@@ -23,4 +23,15 @@ to get the commit id, and then do cap deploy using this id
 but if we had copied the code by some sort of export on the build server, we wont have the .git repo, in this case, how can we deploy the current checked out code. it must be having an id, what is the best way to store this id and use it in an ant script that would then do a cap deploy with this id?
 
 
+I had pull access only to a git repo, example git@github.com:x/x.git
+I had to fork it, make changes, commit and then do a pull request
+i had cloned git@github.com:x/x.git locally
+i made changes, and committed
+i forked, to get a url like git@github.com:umarsheikh/x.git
+I did not want to clone it, and push there, so i simply did:
+git remote add umar_fork git@github.com:umarsheikh/x.git
+git branch # showed master
+git push umar_fork master
+this made my changes reflect on the git@github.com:umarsheikh/x.git
+and then i could do a pull request
 
