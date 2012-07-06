@@ -1,0 +1,3 @@
+replace all files, like company/index.js, company/show.js, category/index.js, category/show.js to file in same folder but with .jst.eco extension:
+
+for x in */*.js; do mv "$x" "${x%.js}.jst.eco"; done

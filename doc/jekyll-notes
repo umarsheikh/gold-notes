@@ -1,0 +1,5 @@
+1 "jekyll" to run and generate the _site folder
+2 'jekyll --server' to make the generate site avaialble at localhost:4000
+- uses the liquid templating system by default
+- any file in a jekyll site can be markdown or html
+

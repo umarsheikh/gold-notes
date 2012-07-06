@@ -1,0 +1,117 @@
+Anonymous Functions:
+	Anonymous functions are declared using the function operator.
+  simple function
+	function eatCake(){
+		 alert("So delicious and moist");
+	};
+	eatCake();
+  
+  same function is declared dynamically using the function operator:
+	
+	var eatCakeAnon = function(){
+ 		alert("So delicious and moist");
+  }
+  eatCakeAnon();
+
+
+  call anon function after declaring:
+	(function() {
+		var myProperty = "hello world";
+		alert(myProperty);
+	})();
+	
+  we can run the function as soon as we create it.
+	var test = "a";
+	(function testFunc(foo) {
+ 	 	alert(foo);
+	})(test);//alerts a
+if you don’t need to reference this function again you want it to run and then forget about the function itself.
+
+
+anonymous function assigned to a variable cannot be called before the variable is initialized 
+fnAnonymous(); // undefined
+var fnAnonymous = function(){
+	alert("hi");
+};
+fnAnonymous(); //hi
+// a named function can be accessed anywhere as long as it is within the same scope that the function is created
+fnNamed(); // hi
+function fnNamed(){
+	alert("hi");
+};
+fnNamed(); //hi
+
+
+// anon function in an object
+var Person = {
+	sayHello: function(){
+		alert("hi");
+	}
+};
+//Self-invoking anonymous functions
+((function () {
+	alert("hi");
+})());
+
+
+Passing anonymous function as a parameter to other:
+var asnad = function(a){
+    alert(a());
+}
+asnad(function(){
+    return 5;
+});
+The function is invoked this way due to a feature of javascript called function literals. A function declared using a function literal can successfully be passed as an argument, as it is stored as a variable and therefore not invoked when the arguments are evaluated. Here is another way to use function literals to declare the function as a variable.
+var b=function(){
+    return 5;
+};
+asnad(b());
+
+
+Call() and Apply():
+suppose we have a function
+	var x = 10;
+
+	function f()
+	{
+		alert(this.x);
+	}
+
+	f(); //10
+
+  use with call to change 'this':
+	var x =10;
+	var o = {x: 15};
+	function f(){
+		alert(this.x);
+	}
+	f();//10
+	f.call(o); //15
+
+
+ pass arguments to the target function via call(): 
+	var x = 10;
+	var o = { x: 15 };
+	function f(message)
+	{
+		alert(message);
+		alert(this.x);
+	}
+
+	f("invoking f");
+	f.call(o, "invoking f via call to change this reference");
+The apply() method is identical to call(), except apply() requires an array as the second parameter. The array represents the arguments for the target method.
+	var x = 10;
+	var o = { x: 15 };
+	function f(message)
+	{
+		alert(message);
+		alert(this.x);
+	}
+	f("invoking f");
+	f.apply(o, ["invoking f through apply"]);
+
+References
+http://thoughtsonscripts.blogspot.com/2012/01/javascript-anonymous-functions.html
+http://helephant.com/2008/08/23/javascript-anonymous-functions/http://briancrescimanno.com/2009/09/24/how-self-executing-anonymous-functions-work/
+http://odetocode.com/Blogs/scott/archive/2007/07/05/function-apply-and-function-call-in-javascript.aspx.

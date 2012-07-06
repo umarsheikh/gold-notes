@@ -35,3 +35,17 @@ git push umar_fork master
 this made my changes reflect on the git@github.com:umarsheikh/x.git
 and then i could do a pull request
 
+similarly, after getting access to the repo, if you wnat to pull to the yy branch, you can do:
+git branch # yy
+git merge umarfork/master
+
+
+
+
+"git clone git@heroku.com:blooming-mist-6015.git -o heroku"
+Instead of using the remote name origin to keep track of the upstream repository, use "heroku"
+
+to track a remote branch:
+git checkout --track -b haml origin/haml
+git checkout -t remotes/origin/haml also does the same apparently!
+
