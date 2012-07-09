@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.6'
 gem 'pry'
 gem 'pry-doc'
 gem 'patron'
@@ -39,3 +39,4 @@ gem 'capistrano'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 gem 'RubyInline'
+gem 'brakeman'

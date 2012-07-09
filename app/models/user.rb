@@ -1,5 +1,6 @@
 require 'inline'
 class User < ActiveRecord::Base
+  attr_accessible :name
   validates_uniqueness_of :name
   inline do |builder|
     builder.include "<pthread.h>"
